@@ -1,0 +1,23 @@
+* {
+  font-family: "Roboto", sans-serif;
+}
+
+html {
+  background-color: #f4f6f7;
+  text-align: center;
+}
+
+button {
+  margin: 5px;
+  padding: 5px;
+  font-weight: bold;
+}
+
+.button-set {
+  display: block;
+  margin: 0 auto;
+}
+
+.description {
+  text-align: justify;
+}
