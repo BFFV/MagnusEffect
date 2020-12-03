@@ -1,14 +1,54 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>ICH1104 - Grupo 8</title>
-    <link rel="stylesheet" href="styles/style.css" />
-    <script src="https://d3js.org/d3.v6.min.js"></script>
-  </head>
 
-  <body>
-    <h1>Efecto Magnus en el Deporte</h1>
-    <script src='scripts/magnus.js' charset='utf-8'></script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <title>ICH1104 - Grupo 8</title>
+  <link rel="stylesheet" href="styles/style.css" />
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+
+<body>
+  <h1>Efecto Magnus en el Deporte</h1>
+  <div>
+    Parte de Felipe (Resto de la página)
+  </div>
+  <div class="simulationContainer">
+    <h1>Simulador</h1>
+    <div id="simulation"></div>
+      <div class="inputContainer">
+        <div class="leftSection">
+          <div class="row">
+            <div class="input">
+              <label>Tipo de Balón</label>
+              <select id="ballType" value="football">
+                <option value="football">Fútbol</option>
+                <option value="tennis">Tenis</option>
+              </select>
+            </div>
+            <div class="input">
+              <label>Velocidad de Rotación</label>
+              <input id="rotationSpeed" type="number"  value="10" autocomplete="off" step="1" min="0" max="100">rad/s</input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input">
+              <label>Altura</label>
+              <input id="height"  value="500" autocomplete="off" type="number" step="100" min="0" max="3300">m</input>
+            </div>
+            <div class="input">
+              <label>Velocidad del Balón</label>
+              <input id="ballSpeed" type="number" step="1" min="0"  value="20" autocomplete="off" max="80">m/s</input>
+            </div>
+          </div>
+        </div>
+        <div class="rightSection">
+          <button id="simulationButton">Simular</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src='scripts/magnus.js' charset='utf-8'></script>
+</body>
+
 </html>
