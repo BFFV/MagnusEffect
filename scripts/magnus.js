@@ -1,4 +1,24 @@
-// Simulation Settings
+// Ode45 solver
+const ode45 = require('ode45-cash-karp');
+
+// Air density
+function getDensity() {
+  return 1;
+}
+
+// ODEs for the ball speed
+function speed(dydt, y, t) {
+  dydt[0] = y[1]
+  dydt[1] = 4 * (1-y[0]*y[0])*y[1] - y[0]
+}
+
+// Solver definition
+const y0 = [2,0],
+    t0 = 0,
+    dt0 = 1e-3,
+    integrator = ode45( y0, speed, t0, dt0);
+
+// Simulation settings
 const simulationContainer = d3.select('#simulation');
 const simulate = d3.select('#simulationButton')
   .on('click', startSimulation)
@@ -14,7 +34,7 @@ const ballSettings = {
   tennis: {M: 0.5, R: 0.05},
 };
 
-// Simulation Variables
+// Simulation variables
 let simulating = false;
 let angle = 0;
 let ballType = d3.select('#ballType').property('value');
@@ -34,7 +54,7 @@ const speedInverse = d3.scaleLinear()
 .domain([0, maxSpeed])
 .range([0, maxSpeedValue])
 
-// Load Simulation
+// Load simulation
 function loadSimulation() {
   const svg = simulationContainer
     .append('svg')
@@ -56,7 +76,7 @@ function loadSimulation() {
       .attr('id', 'ball')
 }
 
-// Reset Simulation
+// Reset simulation
 function resetSimulation() {
   simulating = false;
   clearInterval(interval);
@@ -71,7 +91,7 @@ function resetSimulation() {
     .attr('xlink:href', `data/${ballType}.png`)
 }
 
-// Load Ball Image
+// Load ball image
 function loadBall() {
   ballType = selectBall.property('value');
   if (!simulating) {
@@ -80,7 +100,7 @@ function loadBall() {
   }
 }
 
-// Handle Start Simulation
+// Handle start simulation
 function startSimulation() {
   if (simulating) {
     return resetSimulation();
@@ -100,7 +120,7 @@ function startSimulation() {
   interval = setInterval(simulation, 20);
 }
 
-// Checks Ball Collisions
+// Checks ball collisions
 function checkCollision() {
   if (position.x < 0 || position.x > maxWidth) {
     return true;
@@ -110,12 +130,7 @@ function checkCollision() {
   return false;
 }
 
-// Calculate Air Density
-function getDensity() {
-  return 1;
-}
-
-// Calculate Next Position
+// Calculate next position
 function computeNextPosition() {
   if (prev.x !== position.x) {
     angle += Math.atan((position.y - prev.y) / (position.x - prev.x));
@@ -134,7 +149,7 @@ function computeNextPosition() {
   position.y += speedScale(ballSpeed.y);
 }
 
-// Ball Movement
+// Ball movement
 function simulation() {
   computeNextPosition();
   d3.select('#ball')
@@ -145,5 +160,5 @@ function simulation() {
   }
 }
 
-// Initialize
+// Initialize:
 loadSimulation();
