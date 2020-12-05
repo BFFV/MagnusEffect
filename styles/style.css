@@ -41,6 +41,7 @@ button {
   align-self: center;
   width: 90%;
   margin-left: -50px;
+  background-color:#90EAEE;
 }
 
 .inputContainer {
@@ -105,4 +106,3 @@ button {
   font-size: 20px;
   color: white;
 }
-

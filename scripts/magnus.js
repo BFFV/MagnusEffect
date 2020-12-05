@@ -23,7 +23,7 @@ const ballSettings = {
 // Speed Scale
 const speedScale = d3.scaleLinear()
   .domain([0, 100])
-  .range([0, maxWidth * 0.15])
+  .range([0, maxWidth * 0.12])
 
 // Simulation variables
 let simulating = false;
