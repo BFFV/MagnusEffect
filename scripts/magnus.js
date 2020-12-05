@@ -1,23 +1,6 @@
 // Ode45 solver
 const ode45 = require('ode45-cash-karp');
 
-// Air density
-function getDensity() {
-  return 1;
-}
-
-// ODEs for the ball speed
-function speed(dydt, y, t) {
-  dydt[0] = y[1]
-  dydt[1] = 4 * (1-y[0]*y[0])*y[1] - y[0]
-}
-
-// Solver definition
-const y0 = [2,0],
-    t0 = 0,
-    dt0 = 1e-3,
-    integrator = ode45( y0, speed, t0, dt0);
-
 // Simulation settings
 const simulationContainer = d3.select('#simulation');
 const simulate = d3.select('#simulationButton')
@@ -26,33 +9,64 @@ const selectBall = d3.select('#ballType')
   .on('change', loadBall)
 const maxWidth = parseInt(simulationContainer.style('width'), 10);
 const maxHeight = maxWidth * 0.5;
-const initialPosition = {'x': 0, 'y': (maxHeight / 2) - 30}
-const maxSpeed = 50;
-const maxSpeedValue = 80;
+const initialPosition = {'x': 0, 'y': (maxHeight / 2) - 30};
 const ballSettings = {
-  football: {M: 1, R: 0.1},
-  tennis: {M: 0.5, R: 0.05},
+  basketball: {M: 0.61, R: 0.12},
+  football: {M: 0.43, R: 0.11},
+  volleyball: {M: 0.27, R: 0.105},
+  baseball: {M: 0.142, R: 0.036},
+  tennis: {M: 0.114, R: 0.033},
+  golf: {M: 0.046, R: 0.021},
+  tableTennis: {M: 0.0028, R: 0.02}
 };
+
+// Speed Scale
+const speedScale = d3.scaleLinear()
+  .domain([0, 100])
+  .range([0, maxWidth * 0.15])
 
 // Simulation variables
 let simulating = false;
+let ballType = 'football';
+let rotation = 0;
+let ballHeight = 0;
+let ballSpeed = {'x': 0, 'y': 0};
+let temperature = 0;
+let initialSpeed = 0;
 let angle = 0;
-let ballType = d3.select('#ballType').property('value');
-let rotation = parseInt(d3.select('#rotationSpeed').property('value'), 10);
-let ballHeight = parseInt(d3.select('#height').property('value'), 10);
-let ballSpeed = {'x': parseInt(d3.select('#ballSpeed').property('value'), 10), 'y': 0};
-let initialSpeed = ballSpeed.x;
-let prev = {'x': initialPosition.x, 'y': initialPosition.y};
 let interval = 0;
-const position = {'x': initialPosition.x, 'y': initialPosition.y}
+let integrator = ode45([0, 0], speed, 0, 1);
+const position = {'x': initialPosition.x, 'y': initialPosition.y};
 
-// Scales
-const speedScale = d3.scaleLinear()
-  .domain([0, maxSpeedValue])
-  .range([0, maxSpeed])
-const speedInverse = d3.scaleLinear()
-.domain([0, maxSpeed])
-.range([0, maxSpeedValue])
+// Air density
+function getDensity(h, T) {
+  const g = 9.81;
+  const T0 = 288.15;
+  const M = 0.0289654;
+  const L = 0.0065;
+  const R = 8.31447;
+  const p0 = 101325;
+  const p = p0 * ((1 - (L * h / T0)) ** ((g * M) / (R * L)));
+  const Rs = 287.058;
+  return p / (T * Rs);
+}
+
+// ODEs for the ball speed
+function speed(dydt, y, t) {
+  const v = Math.sqrt(y[0] ** 2 + y[1] ** 2);
+  const density = getDensity(ballHeight, temperature);
+  const ball = ballSettings[ballType];
+  const area = Math.PI * (ball.R ** 2);
+  const mass = ball.M;
+  const Cd = 0.508 + (1 / ((22.503 + 4.196 * ((initialSpeed / Math.abs(rotation)) ** 2.5)) ** 0.4));
+  const Cl = 1 / (2.202 + 0.981 * (initialSpeed / Math.abs(rotation)));
+  let spin = 1;
+  if (rotation < 0) {
+    spin = -1;
+  }
+  dydt[0] = - (1 / (2 * mass)) * density * area * v * (Cd * y[0] + Cl * y[1] * spin);
+  dydt[1] = - (1 / (2 * mass)) * density * area * v * (Cd * y[1] - Cl * y[0] * spin);
+}
 
 // Load simulation
 function loadSimulation() {
@@ -89,6 +103,8 @@ function resetSimulation() {
     .attr('x', position.x)
     .attr('y', position.y)
     .attr('xlink:href', `data/${ballType}.png`)
+    .attr('transform-origin', `${position.x + 30} ${position.y + 30}`)
+    .attr('transform', `rotate (0)`)
 }
 
 // Load ball image
@@ -111,13 +127,12 @@ function startSimulation() {
   ballSpeed.x = parseInt(d3.select('#ballSpeed').property('value'), 10);
   ballSpeed.y = 0;
   initialSpeed = ballSpeed.x;
-  prev.x = initialPosition.x;
-  prev.y = initialPosition.y;
-  angle = 0;
   rotation = parseInt(d3.select('#rotationSpeed').property('value'), 10);
   ballHeight = parseInt(d3.select('#height').property('value'), 10);
+  temperature = parseInt(d3.select('#temperature').property('value'), 10);
+  integrator = ode45([initialSpeed, 0], speed, 0, 1);
   simulating = true;
-  interval = setInterval(simulation, 20);
+  interval = setInterval(simulation, 10);
 }
 
 // Checks ball collisions
@@ -132,21 +147,16 @@ function checkCollision() {
 
 // Calculate next position
 function computeNextPosition() {
-  if (prev.x !== position.x) {
-    angle += Math.atan((position.y - prev.y) / (position.x - prev.x));
+  try {
+    integrator.step();
+  } catch {
+    resetSimulation();
   }
-  prev.y = position.y;
-  prev.x = position.x;
-  const F = 1 * getDensity() * Math.PHI * rotation * Math.sqrt(ballSpeed.x^2 + ballSpeed.y^2) * ballSettings[ballType].R^3;
-
-  // Calcular velocidad a partir de fuerza de magnus y dinámica
-  ballSpeed.x += -F * Math.sin(angle) / ballSettings[ballType].M;
-  ballSpeed.y += F * Math.cos(angle) / ballSettings[ballType].M;
-
-  // Buscar forma de realizarlo correctamente
-
+  ballSpeed.x = integrator.y[0];
+  ballSpeed.y = integrator.y[1];
   position.x += speedScale(ballSpeed.x);
   position.y += speedScale(ballSpeed.y);
+  angle += (rotation * (180 / Math.PI)) / 100;
 }
 
 // Ball movement
@@ -155,6 +165,8 @@ function simulation() {
   d3.select('#ball')
     .attr('x', position.x)
     .attr('y', position.y)
+    .attr('transform-origin', `${position.x + 30} ${position.y + 30}`)
+    .attr('transform', `rotate (${angle})`)
   if (checkCollision()) {
     resetSimulation();
   }
