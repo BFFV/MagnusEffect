@@ -1,14 +1,66 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>ICH1104 - Grupo 8</title>
-    <link rel="stylesheet" href="styles/style.css" />
-    <script src="https://d3js.org/d3.v6.min.js"></script>
-  </head>
 
-  <body>
-    <h1>Efecto Magnus en el Deporte</h1>
-    <script src='scripts/magnus.js' charset='utf-8'></script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <title>ICH1104 - Grupo 8</title>
+  <link rel="stylesheet" href="styles/style.css" />
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+
+<body>
+  <h1>Efecto Magnus en el Deporte</h1>
+  <div>
+    Parte de Felipe (Resto de la página)
+  </div>
+  <div class="simulationContainer">
+    <h1>Simulador</h1>
+    <div id="simulation"></div>
+      <div class="inputContainer">
+        <div class="leftSection">
+          <div class="row">
+            <div class="input">
+              <label>Tipo de Pelota: </label>
+              <select id="ballType" value="football">
+                <option value="football">Fútbol</option>
+                <option value="basketball">Básquetbol</option>
+                <option value="volleyball">Voleibol</option>
+                <option value="baseball">Béisbol</option>
+                <option value="tennis">Tenis</option>
+                <option value="golf">Golf</option>
+                <option value="tableTennis">Tenis de Mesa</option>
+              </select>
+            </div>
+            <div class="input">
+              <label>Velocidad de Rotación: </label>
+              <input id="rotationSpeed" type="number" value="100" autocomplete="off" step="100" min="-1000" max="1000"> (rad/s)</input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input">
+              <label>Altura:</label>
+              <input id="height" value="1000" autocomplete="off" type="number" step="100" min="0" max="5000"> (m)</input>
+            </div>
+            <div class="input">
+              <label>Velocidad Inicial:</label>
+              <input id="ballSpeed" type="number" step="1" min="0" value="50" autocomplete="off" max="100"> (m/s)</input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input">
+              <label>Temperatura:</label>
+              <input id="temperature" value="275" autocomplete="off" type="number" step="10" min="180" max="300"> (K)</input>
+            </div>
+          </div>
+        </div>
+        <div class="rightSection">
+          <button id="simulationButton">Simular</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="scripts/bundle.js"></script>
+  <script src='scripts/magnus.js' charset='utf-8'></script>
+</body>
+
 </html>
