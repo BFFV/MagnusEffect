@@ -95,7 +95,7 @@ function resetSimulation() {
   simulating = false;
   clearInterval(interval);
   simulate
-    .style('background-color', '#191970')
+    .style('background-color', '#273646')
     .text('Simular')
   position.x = initialPosition.x;
   position.y = initialPosition.y;

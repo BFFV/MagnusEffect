@@ -9,38 +9,35 @@
 </head>
 
 <body>
-  <div id=generalTitle>
+  <div id="generalTitle">
     <h1>EFECTO MAGNUS EN EL DEPORTE</h1>
-
     <div id="titleFooter"></div>
   </div>
   <div class="preSimulationContainer">
     <div class="generalDescriptionRow">
       <div class="descriptionText">
-        <h1> Efecto Magnus</h1>
+        <h1>Efecto Magnus</h1>
         <p>¿Alguna vez has golpeado una pelota con efecto y visto que se forma
-          una curvatura en su trayectoría? <br>
+          una curvatura en su trayectoria? <br>
           Este fenómeno es explicado por el Efecto
-          Magnus. En términos generales esta curva se produce por la interacción 
-          entre la pelota y el fluido que la rodea que, en situaciones ligadas al
-          deporte, suele ser aire. En dicha relación, el fluido que rodea a la pelota 
-          genera una fuerza adicional sobre el objeto en movimiento, provocada por 
-          las diferencias de presión de este fluido en la superficie de contacto con 
+          Magnus. En términos generales esta curva se produce por la interacción
+          entre la pelota y el fluido que la rodea, el que en situaciones ligadas al
+          deporte suele corresponder al aire. En dicha relación, el fluido que rodea a la pelota
+          genera una fuerza adicional sobre el objeto en movimiento, provocada por
+          las diferencias de presión de este fluido sobre la superficie de contacto con
           la pelota.
-        
         </p>
       </div>
       <img id="spinFootball" src="data/spinFootball.png">
-
     </div>
     <div class="theoryRow">
       <div class="theory">
         <h1>Teoría</h1>
-        <p id="firstTheoryP">Para explicar el Efecto Magnus utilizaremos el Principio de 
-          Bernoulli que describe el comportamiento de un fluido a lo largo de una línea de corriente.
+        <p id="firstTheoryP">Para explicar el Efecto Magnus utilizaremos el Principio de
+          Bernoulli, que describe el comportamiento de un fluido a lo largo de una línea de corriente.
           Tomaremos los puntos A y B de la foto que se encuentra a la derecha y asumiremos que el plano es perpendicular con la gravedad.
           <br>
-          La ecuación, simplificando las alturas ya que tomamos dos puntos en la misma altura,
+          La ecuación, simplificando las alturas ya que utilizamos una vista en planta,
           queda de la siguiente forma:
         </p>
         <img class="equation" src="data/simplifiedBernoulli.png" alt="">
@@ -51,8 +48,8 @@
           Debido a esto, se tiene que la presión en el punto A debe ser mayor que la presión en el punto B
           para que la igualdad se mantenga.
           <br>
-          Esta diferencia de presiones courre a lo largo de toda la esfera, los puntos del lado A
-          siempre estarán a mayor presión que los puntes del lado B, lo que provoca que la presión
+          Esta diferencia de presiones ocurre a lo largo de toda la esfera, los puntos del lado A
+          siempre estarán a mayor presión que los puntos del lado B, lo que provoca que la presión
           del fluido genere una fuerza resultante desde A hacia B que desplaza la trayectoria del balón.
           <br>
           Luego, en un punto de la esfera, se genera un diferencial de fuerza debido a la diferencia de presiones:
@@ -60,16 +57,15 @@
         </p>
         <img class="equation" src="data/forceDifferential.png" alt="">
 
-        <p>Finalmente reemplazando en la ecuación de Bernoulli, considerando las velocidades en los puntos
-          A y B como la velocidad de la pelota menos la velocidad angular y en el otro caso más, la fuerza total
-        ejercida por el fluido sobre el balón queda como: </p>
+        <p>Finalmente, reemplazando en la ecuación de Bernoulli y considerando la velocidad angular y del centro de la pelota, así como sus propiedades de masa y área,
+           la fuerza total ejercida por el fluido sobre el balón queda como: </p>
         <img class="equation" src="data/magnusForceEquation.png" alt="">
-        <p>A continuación se puede ver una simulación de como afectan los diferentes parámetros
-          en la trayectoria de la pelota debido al Efecto Magnus.
+        <p>A continuación se encuentra una simulación en la que se puede visualizar como afectan los diferentes parámetros en la trayectoria
+           de la pelota debido al Efecto Magnus.
         </p>
       </div>
+
       <img id="magnusEffect" src="data/magnusEffect.png">
-      
     </div>
   </div>
   <div class="simulationContainer">
