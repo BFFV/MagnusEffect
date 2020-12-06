@@ -7,7 +7,7 @@ body {
 }
 
 h1 {
-  color: #191970;
+  color: #273646;
 }
 
 html {
@@ -30,10 +30,90 @@ button {
   text-align: justify;
 }
 
+#generalTitle {
+  height: 70px;
+}
+
+#generalTitle > h1 {
+  background-color:#273646;
+  color: white;
+  margin: 0 auto;
+  height: 50px;
+}
+
+#titleFooter{
+  background-color: #01b3b9;
+  height: 20px;
+}
+
+.preSimulationContainer {
+  display: flex;
+  flex-direction: column;
+  margin-left: 25px;
+}
+
+.generalDescriptionRow {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  padding-bottom: 10px;
+  align-items: flex-start;
+}
+
+.descriptionText {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: flex-start;
+}
+
+.descriptionText > p {
+  text-align: justify;
+  margin-top: 0px;
+  margin-left: 5px;
+  margin-right: 15px;
+}
+
+#spinFootball {
+  width: 40%;
+  margin: 15px;
+  margin-left: 50px;
+}
+
+.theoryRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.theory {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: justify;
+}
+
+#firstTheoryP {
+  margin-top: 0px;
+}
+
+.equation {
+  width: 200px;
+  align-self: center;
+}
+
+#magnusEffect {
+  width: 30%;
+  height: 0%;
+  margin: 42px;
+  align-self: center;
+}
+
 .simulationContainer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin-left: 25px;
 }
 
 #simulation {
@@ -41,7 +121,7 @@ button {
   align-self: center;
   width: 90%;
   margin-left: -50px;
-  background-color:#90EAEE;
+  background-color:#01b3b9;
 }
 
 .inputContainer {
@@ -101,7 +181,7 @@ button {
 #simulationButton {
   width: 200px;
   height: 60px;
-  background-color:  #191970;
+  background-color:  #273646;
   border-radius: 18px;
   font-size: 20px;
   color: white;
